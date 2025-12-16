@@ -10,7 +10,7 @@ import org.rsmod.game.type.stat.StatType
 class WornXpModifiers @Inject constructor(private val objTypes: ObjTypeList) : XpMod {
     override fun Player.modifier(stat: StatType): Double {
         val percent = worn.sumOf { it?.modPercent(stat) ?: 0 }
-        return percent / 100.0
+        return if (percent == 20) 0.25 else percent / 100.0
     }
 
     private fun InvObj.modPercent(stat: StatType): Int {
