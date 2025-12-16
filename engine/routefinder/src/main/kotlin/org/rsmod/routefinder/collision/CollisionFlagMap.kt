@@ -54,6 +54,20 @@ public class CollisionFlagMap(public val flags: Array<IntArray?> = arrayOfNulls(
     }
 
     /**
+     * Sets the collision flags for the zone that can be found in coordinates ([absoluteX],
+     * [absoluteZ], [level]) to the [tileFlags] array.
+     *
+     * The x and z-coordinate can range anywhere between 0-7 tiles in respect to the zone base
+     * coordinates. For example, calling this method with the arguments (3202, 3204, [level], 
+     * [tileFlags]) will have the same results as calling it with (3200, 3200, [level], [tileFlags]).
+     */
+    public fun set(absoluteX: Int, absoluteZ: Int, level: Int, tileFlags: IntArray) {
+        require(tileFlags.size == ZONE_TILE_COUNT) { "`tileFlags` length must be equal to $ZONE_TILE_COUNT." }
+        val zoneIndex = zoneIndex(absoluteX, absoluteZ, level)
+        flags[zoneIndex] = tileFlags
+    }
+
+    /**
      * Allocates and initializes the collision flags for the zone that can be found in coordinates
      * ([absoluteX], [absoluteZ], [level]). If the zone has already been allocated then nothing will
      * be performed.
